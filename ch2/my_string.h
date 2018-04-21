@@ -15,6 +15,7 @@ char get_word(char output[], int size_limit) {
     }
 }
 
+/* Takes the first line (string separated by a newline character) from input and stores it in output array */
 char get_line(char output[], int size_limit) {
     char c;
     int i;
@@ -29,4 +30,17 @@ char get_line(char output[], int size_limit) {
     while (c != '\n' && c != EOF) {
         c = getchar();
     }
+}
+
+/* in_string: returns 1 if char c is in string s, otherwise 0 */
+int in_string(char c, char s[]) {
+    int i = 0, result = 0;
+
+    while (s[i] != '\0' && result == 0) {
+       if (s[i++] == c) {
+          result = 1; 
+       }
+   }
+
+   return result;
 }

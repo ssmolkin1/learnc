@@ -1,10 +1,9 @@
 #include <stdio.h>
-#include "getinput.h"
+#include "my_string.h"
 
 #define MAXLEN 20
 
 void squeeze_alt(char s1[], char s2[]);
-int in_string(char c, char s[]);
 
 int main(void) {
     char string1[MAXLEN + 1], string2[MAXLEN + 1];
@@ -30,15 +29,3 @@ void squeeze_alt(char s1[], char s2[]) {
     s1[j] = '\0';
 }
 
-/* in_string: returns 1 if char c is in string s, otherwise 0 */
-int in_string(char c, char s[]) {
-    int i = 0, result = 0;
-
-    while (s[i] != '\0' && result == 0) {
-        if (s[i++] == c) {
-            result = 1; 
-        }
-    }
-
-    return result;
-}
