@@ -2,6 +2,8 @@
 #define _MY_STRING_H_
 
 #include <stdio.h>
+#include <string.h>
+
 /* get_str: Takes stdin and stores it in an array */
 void get_str(char output[], int size_limit) {
     char c;
@@ -59,5 +61,16 @@ int in_string(char c, char s[]) {
    }
 
    return result;
+}
+
+/* reverse: reverse string s in place */
+void reverse(char s[]) {
+    int c, i, j;
+
+    for (i = 0, j = strlen(s) - 1; i < j; i++, j--) {
+        c = s[i];
+        s[i] = s[j];
+        s[j] = c;
+    }
 }
 #endif
