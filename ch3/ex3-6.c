@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <limits.h>
-#include <stdlib.h>
 #include "../my_string.h"
 
 #define MAXSTRSIZE  33
 
+void itoa2(int number, char string[], int width);
 void itoa(int number, char string[]);
 void itob(int number, char string[], int base);
 
@@ -12,9 +12,37 @@ int main(void) {
     int largest_negative = INT_MIN, easy_num = 23, test_case = -1;
     char string[MAXSTRSIZE];
 
-    itob(test_case, string, 16);
+    itoa2(INT_MIN, string, 14);
     
     printf("%s\n", string);
+}
+
+void itoa2(int n, char s[], int w) {
+    int i, is_negative = ((n < 0) ? 1: 0);
+    unsigned int num;
+
+    if (is_negative) {
+        num = -n;
+    } else {
+        num = n;
+    }
+
+    i = 0;
+    do {
+        s[i++] = num % 10 + '0';
+    } while ((num /= 10) > 0);
+
+    while (i < w - is_negative) {
+        s[i++] = ' ';
+    }
+
+    if (is_negative) {
+        s[i++] = '-';
+    }
+
+    s[i] = '\0';
+
+    reverse(s);
 }
 
 void itoa(int n, char s[]) {
