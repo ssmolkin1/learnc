@@ -2,7 +2,7 @@
 #define _CALC_
 
 enum types {
-    NUMBER = '\0', SIN, COS, TAN
+    NUMBER = '\0', SIN, COS, TAN, STR, CAL, SHO
 };
 
 /* from stack.c */

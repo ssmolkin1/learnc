@@ -38,6 +38,18 @@ int getop(char s[]) {
                 return TAN;
             }
 
+            if (strcmp(fun, "str") == 0) {
+                return STR;
+            }
+
+            if (strcmp(fun, "cal") == 0) {
+                return CAL;
+            }
+
+            if (strcmp(fun, "sho") == 0) {
+                return SHO;
+            }
+
         } else {
             while (j > 1) {
                 if (fun[--j] != EOF) {

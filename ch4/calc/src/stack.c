@@ -7,6 +7,8 @@
 static int sp = 0; /* next free stack position */
 static double val[MAXVAL]; /* value stack */
 
+extern double r;
+
 /* push: push f onto value stack */
 void push(double f) {
     if (sp < MAXVAL) {
@@ -29,7 +31,8 @@ double pop(void) {
 /* print: print the top element of the stack */
 void print(void) {
     if (sp > 0) {
-        printf("\t%.8g\n", val[sp - 1]);
+        r = val[sp - 1];
+        printf("\t%.8g\n", r);
     } else {
         printf(EEMPTY);
     }

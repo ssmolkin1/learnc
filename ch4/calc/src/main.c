@@ -5,12 +5,26 @@
 
 #define MAXOP 100
 
+/* register for storing which variable is being worked on */
+char reg;
+
+/* user defined variables */
+double x, y, z;
+
+/* variable for last printed item */
+double r;
+
+/* variable handling functions  */
+void store(char var);
+void call(char var);
+void show(char var);
+
 /* reverse Polish calculator */
 int main(void) {
     int type;
     double op2;
     char s[MAXOP];
-
+    
     while ((type = getop(s)) != EOF) {
         switch (type) {
         case NUMBER:
@@ -52,7 +66,8 @@ int main(void) {
             }
             break;
         case '\n':
-            printf("\t%.8g\n", pop());
+            r = pop();
+            printf("\t%.8g\n", r);
             break;
         case 'p':
             print();
@@ -66,6 +81,21 @@ int main(void) {
         case 'c':
             clearall();
             break;
+        case SHO:
+            show(reg);
+            break;
+        case CAL:
+            call(reg);
+            break;
+        case STR:
+            store(reg);
+            break;
+        case 'x':
+        case 'y':
+        case 'z':
+        case 'r':
+            reg = type;
+            break;
         default:
             printf("error: unknown command %s\n", s);
             break;
@@ -73,4 +103,58 @@ int main(void) {
     }
 
     return 0;
+}
+
+void store(char token) {
+    switch (token) {
+    case 'x':
+        x = pop();
+        break;
+    case 'y':
+        y = pop();
+        break;
+    case 'z':
+        z = pop();
+        break;
+    default:
+        printf("error: %c is not a variable", token);
+    }
+}
+
+void call(char token) {
+    switch (token) {
+    case 'x':
+        push(x);
+        break;
+    case 'y':
+        push(y);
+        break;
+    case 'z':
+        push(z);
+        break;
+    case 'r':
+        push(r);
+        break;
+    default:
+        printf("error: %c is not a variable", token);
+    }
+}
+
+void show(char token) {
+    switch (token) {
+    case 'x':
+        printf("\t%.8g\n"  , x);
+        break;
+    case 'y':
+        printf("\t%.8g\n"  , y);
+        break;
+    case 'z':
+        printf("\t%.8g\n"  , z);
+        break;
+    case 'r':
+        printf("\t%.8g\n"  , r);
+        break;
+    default:
+        printf("error: %c is not a variable", token);
+    }
 }
