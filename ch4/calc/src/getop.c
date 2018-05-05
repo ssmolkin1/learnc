@@ -19,28 +19,30 @@ int getop(char s[]) {
 
         fun[0] = c;
 
-        while ((fun[j++] = d = getch()) >= 'a' && d <= 'z' && j < 4) {
+        while ((fun[j++] = d = getch()) >= 'a' && d <= 'z' && j < 3) {
             ;
         }
 
-        if (j == 4) {
+        if (j == 3) {
             fun[j] = '\0';
 
-            if (strcmp(fun, "sin")) {
-                printf("got here");
+            if (strcmp(fun, "sin") == 0) {
                 return SIN;
             }
             
-            if (strcmp(fun, "cos")) {
+            if (strcmp(fun, "cos") == 0) {
                 return COS;
             }
             
-            if (strcmp(fun, "tan")) {
+            if (strcmp(fun, "tan") == 0) {
                 return TAN;
             }
+
         } else {
             while (j > 1) {
-                ungetch(fun[--j]);
+                if (fun[--j] != EOF) {
+                    ungetch(fun[j]);
+                };
             }
 
             return c; /* not a number or function */

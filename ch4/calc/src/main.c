@@ -8,7 +8,7 @@
 /* reverse Polish calculator */
 int main(void) {
     int type;
-    double op2, str;
+    double op2;
     char s[MAXOP];
 
     while ((type = getop(s)) != EOF) {
@@ -17,19 +17,13 @@ int main(void) {
             push(atof(s));
             break;
         case SIN:
-            op2 = pop();
-            str = sin(op2);
-            push(str);
+            push(sin(pop()));
             break;
         case COS:
-            op2 = pop();
-            cos(op2);
-            push(op2);
+            push(cos(pop()));
             break;
         case TAN:
-            op2 = pop();
-            tan(op2);
-            push(op2);
+            push(tan(pop()));
             break;
         case '+':
             push(pop() + pop());
