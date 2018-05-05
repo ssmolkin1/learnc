@@ -14,11 +14,11 @@ void swap(void);
 void clearall(void);
 
 /* from getop.c */
-int getop(char []);
+int getop(char [], char []);
 
 /* from getch.c */
-int getch(void);
-void ungetch(int);
+int getch(char []);
+void ungetch(void);
 void ungets(char []);
               
 #endif

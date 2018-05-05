@@ -19,87 +19,94 @@ void store(char var);
 void call(char var);
 void show(char var);
 
+/* string read head position, to be reset at each end of loop */
+extern int strp;
+
 /* reverse Polish calculator */
 int main(void) {
     int type;
     double op2;
-    char s[MAXOP];
+    char s[MAXOP], input[MAXOP];
     
-    while ((type = getop(s)) != EOF) {
-        switch (type) {
-        case NUMBER:
-            push(atof(s));
-            break;
-        case SIN:
-            push(sin(pop()));
-            break;
-        case COS:
-            push(cos(pop()));
-            break;
-        case TAN:
-            push(tan(pop()));
-            break;
-        case '+':
-            push(pop() + pop());
-            break;
-        case '*':
-            push(pop() * pop());
-            break;
-        case '-':
-            op2 = pop();
-            push(pop() - op2);
-            break;
-        case '/':
-            op2 = pop();
-            if (op2 != 0.0) {
-                push(pop() / op2);
-            } else {
-                printf("error: zero divisor");
+    while (fgets(input, MAXOP, stdin) != NULL) {
+        /* reset string read position */
+        strp = 0;
+
+        while ((type = getop(input, s)) != '\n') {
+            switch (type) {
+            case NUMBER:
+                push(atof(s));
+                break;
+            case SIN:
+                push(sin(pop()));
+                break;
+            case COS:
+                push(cos(pop()));
+                break;
+            case TAN:
+                push(tan(pop()));
+                break;
+            case '+':
+                push(pop() + pop());
+                break;
+            case '*':
+                push(pop() * pop());
+                break;
+            case '-':
+                op2 = pop();
+                push(pop() - op2);
+                break;
+            case '/':
+                op2 = pop();
+                if (op2 != 0.0) {
+                    push(pop() / op2);
+                } else {
+                    printf("error: zero divisor");
+                }
+                break;
+            case '%':
+                op2 = pop();
+                if (op2 != 0.0) {
+                    push((int) pop() % (int) op2);
+                } else {
+                    printf("error: zero divisor");
+                }
+                break;
+            case 'p':
+                print();
+                break;
+            case 'd':
+                dup();
+                break;
+            case 's':
+                swap();
+                break;
+            case 'c':
+                clearall();
+                break;
+            case SHO:
+                show(reg);
+                break;
+            case CAL:
+                call(reg);
+                break;
+            case STR:
+                store(reg);
+                break;
+            case 'x':
+            case 'y':
+            case 'z':
+            case 'r':
+                reg = type;
+                break;
+            default:
+                printf("error: unknown command %s\n", s);
+                break;
             }
-            break;
-        case '%':
-            op2 = pop();
-            if (op2 != 0.0) {
-                push((int) pop() % (int) op2);
-            } else {
-                printf("error: zero divisor");
-            }
-            break;
-        case '\n':
-            r = pop();
-            printf("\t%.8g\n", r);
-            break;
-        case 'p':
-            print();
-            break;
-        case 'd':
-            dup();
-            break;
-        case 's':
-            swap();
-            break;
-        case 'c':
-            clearall();
-            break;
-        case SHO:
-            show(reg);
-            break;
-        case CAL:
-            call(reg);
-            break;
-        case STR:
-            store(reg);
-            break;
-        case 'x':
-        case 'y':
-        case 'z':
-        case 'r':
-            reg = type;
-            break;
-        default:
-            printf("error: unknown command %s\n", s);
-            break;
         }
+
+        r = pop();
+        printf("\t%.8g\n", r);
     }
 
     return 0;

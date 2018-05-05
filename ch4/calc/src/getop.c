@@ -4,10 +4,10 @@
 #include "../headers/calc.h"
 
 /* getop: get next operator or numeric operand */
-int getop(char s[]) {
+int getop(char input[], char s[]) {
     int i, c;
 
-    while ((s[0] = c = getch()) == ' ' || c == '\t') {
+    while ((s[0] = c = getch(input)) == ' ' || c == '\t') {
         ;
     }
 
@@ -19,7 +19,7 @@ int getop(char s[]) {
 
         fun[0] = c;
 
-        while ((fun[j++] = d = getch()) >= 'a' && d <= 'z' && j < 3) {
+        while ((fun[j++] = d = getch(input)) >= 'a' && d <= 'z' && j < 3) {
             ;
         }
 
@@ -53,7 +53,7 @@ int getop(char s[]) {
         } else {
             while (j > 1) {
                 if (fun[--j] != EOF) {
-                    ungetch(fun[j]);
+                    ungetch();
                 };
             }
 
@@ -64,13 +64,13 @@ int getop(char s[]) {
     i = 0;
 
     if (c == '+' || c == '-' || isdigit(c)) { /* collect the integer part */
-        while (isdigit(s[++i] = c = getch())) {
+        while (isdigit(s[++i] = c = getch(input))) {
             ;
         }
     }
 
     if (c == '.') { /* collect the fraction part */
-        while (isdigit(s[++i] = c = getch())) {
+        while (isdigit(s[++i] = c = getch(input))) {
             ;
         }
     }
@@ -78,7 +78,7 @@ int getop(char s[]) {
     s[i] = '\0';
 
     if (c != EOF) {
-        ungetch(c);
+        ungetch();
     }
 
     if (s[i - 1] == '+'|| s[i - 1] == '-') {
