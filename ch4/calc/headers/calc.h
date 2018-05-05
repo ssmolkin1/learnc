@@ -19,5 +19,6 @@ int getop(char []);
 /* from getch.c */
 int getch(void);
 void ungetch(int);
+void ungets(char []);
               
 #endif

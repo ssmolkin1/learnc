@@ -6,7 +6,7 @@
 #define TRUE 1
 #define FALSE 0
 
-static int buf[BUFSIZE]; /* buffer for ungetch */
+static char buf[BUFSIZE]; /* buffer for ungetch */
 static int bufp = 0; /* next free position in buf */
 static int out_of_space = FALSE; /* flag for ungetch() to communicate to ungets() that no space is left in buf */
 static int end_reached = FALSE;
@@ -21,9 +21,9 @@ void ungetch(int c) {
     if (bufp >= BUFSIZE) {
         out_of_space = TRUE;
         printf("error: too many characters\n");
-    } else {
-        buf[bufp++] = c;
-    }
+    } else if (c == EOF) else {
+                      buf[bufp++] = c;
+                      }
 }
 
 /* ungets: unget a string */
