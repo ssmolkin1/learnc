@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <math.h>
+
+#define SIZE 100
+
+int getch(void);
+int ungetch(int);
+int getint(int *);
+int getfloat(double *);
+
+int main(void) {
+    double array[SIZE], res;
+    int n;
+
+    for (n = 0; n < SIZE && (res = getfloat(&array[n])) != EOF && res != 0; n++) {
+        printf("%.8g, ", array[n]);
+    }
+
+    printf("and n is %d.\n", n);
+}
+
+/* getfloat: get next floating point number from input into *pn */
+int getfloat(double *pn) {
+    int c, sign;
+
+    while (isspace(c = getch())) {
+        ;
+    }
+
+    if (!isdigit(c) && c!= EOF && c != '+' && c != '-' && c != '.') {
+        ungetch(c);
+        return 0;
+    }
+
+    sign = (c == '-') ? -1 : 1;
+
+    if (c == '+' || c == '-') {
+        if (!isdigit(c = getch()) && c != '.') {
+            ungetch(c);
+            return 0;
+        }
+    }
+
+    for (*pn = 0; isdigit(c); c = getch()) {
+        *pn = 10 * *pn + (c - '0');
+    }
+
+    if (c == '.') {
+        for (int decimals = 1; isdigit(c = getch()); decimals++) {
+            *pn = *pn + (c - '0') * pow(10, -decimals);
+        }
+    }
+
+    *pn *= sign;
+
+    if (c != EOF) {
+        ungetch(c);
+    }
+
+    return c;
+}
+
+/* getint: get next integer from input into *pn */
+int getint(int *pn) {
+    int c, sign;
+
+    while (isspace(c = getch())) {
+        ;
+    }
+
+    if (!isdigit(c) && c!= EOF && c != '+' && c != '-') {
+        ungetch(c);
+        return 0;
+    }
+
+    sign = (c == '-') ? -1 : 1;
+
+    if (c == '+' || c == '-') {
+        if (!isdigit(c = getch())) {
+            ungetch(c);
+            return 0;
+        }
+    }
+
+    for (*pn = 0; isdigit(c); c = getch()) {
+        *pn = 10 * *pn + (c - '0');
+    }
+
+    *pn *= sign;
+
+    if (c != EOF) {
+        ungetch(c);
+    }
+
+    return c;
+}
+
